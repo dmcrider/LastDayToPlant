@@ -1,12 +1,12 @@
 # Release History
-Check out the [roadmap](https://trello.com/b/erWMvtWf/last-day-to-plant-mod). Don't see a feature you want? [Create an issue](https://github.com/dmcrider/LastDayToPlant/issues/new)
+Check out the [roadmap](https://github.com/dmcrider/LastDayToPlant/projects/1). Don't see a feature you want? [Create an issue](https://github.com/dmcrider/LastDayToPlant/issues/new)
 
 v1.1.0 - Added configuration settings. Will now show messages when it is the last day to use each type of Speed Gro
 
 v1.0.0 - Initial Release
 
 # Install
-- Download from [NexusMods](https://www.nexusmods.com/stardewvalley/mods/7917)(recommended) or from the [latest release](/dmcrider/LastDayToPlant/releases/latest)
+- Download from [NexusMods](https://www.nexusmods.com/stardewvalley/mods/7917) (recommended) or from the [latest release](/dmcrider/LastDayToPlant/releases/latest)
 - Requires SMAPI
 - Extract the ZIP to `\Stardew Valley\Mods\`
 - Start the game to create the `config.json` file
