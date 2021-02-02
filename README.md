@@ -22,5 +22,10 @@ They are all false by default. Soon the `IsAgriculturist` flag will be determine
 
 If any of the others are set to `true`, then a new message will show on the appropriate day with a message that tells you which type of Speed Gro to use if you still want to harvest.
 
-# Supported Languages (In Progress)
+# Supported Languages
 - English
+- Spanish (In Progress)
+- Brazilian Portuguese (In Progress)
+
+# Like what I do?
+If you enjoy the content I create, a donation is greatly appreciated (though NEVER required!). You can make a donation [on my website](https://www.dayloncrider.com/donations)

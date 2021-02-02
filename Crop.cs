@@ -17,14 +17,25 @@ namespace LastDayToPlant
         public string MessageHyperSpeedGro { get; private set; }
 
 
-        public Crop(string name, int daysToMature, IModHelper helper)
+        public Crop(string name, int daysToMature)
         {
             Name = name;
             DaysToMature = daysToMature;
-            Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = Name });
-            MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = Name });
-            MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = Name });
-            MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = Name });
+        }
+
+        public static Crop GetLocalizedCrop(string season, string name, int daysToMature, IModHelper helper)
+        {
+            var tagName = name.Replace(" ", "").Trim().ToLower();
+
+            var crop = new Crop(helper.Translation.Get($"crop.{season}.{tagName}", new { cropName = name }), daysToMature)
+            {
+                Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = name }),
+                MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = name }),
+                MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = name }),
+                MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = name })
+            };
+
+            return crop;
         }
     }
 }

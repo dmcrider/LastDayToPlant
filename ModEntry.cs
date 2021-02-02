@@ -19,11 +19,12 @@ namespace LastDayToPlant
 
         public override void Entry(IModHelper helper)
         {
+            MyHelper = helper;
             MyConfig = MyHelper.ReadConfig<ModConfig>();
+            this.Monitor.Log("Config Loaded", LogLevel.Info);
             SpringCrops = SetSpringCrops();
             SummerCrops = SetSummerCrops();
             FallCrops = SetFallCrops();
-            MyHelper = helper;
 
             MyHelper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
         }
@@ -108,17 +109,17 @@ namespace LastDayToPlant
         {
             var retval = new List<Crop>()
             {
-                new Crop("Blue Jazz",7, MyHelper),
-                new Crop("Cauliflower",12, MyHelper),
-                new Crop("Garlic",4, MyHelper),
-                new Crop("Green Bean",10, MyHelper),
-                new Crop("Kale",6, MyHelper),
-                new Crop("Parsnip",4, MyHelper),
-                new Crop("Potato",6, MyHelper),
-                new Crop("Rhubarb",13, MyHelper),
-                new Crop("Strawberry",8, MyHelper),
-                new Crop("Tulip",6, MyHelper),
-                new Crop("Rice",8, MyHelper)
+                Crop.GetLocalizedCrop("spring","Blue Jazz",4, MyHelper),
+                Crop.GetLocalizedCrop("spring","Cauliflower",12,MyHelper),
+                Crop.GetLocalizedCrop("spring","Garlic",4,MyHelper),
+                Crop.GetLocalizedCrop("spring","Green Bean",10,MyHelper),
+                Crop.GetLocalizedCrop("spring","Kale",6,MyHelper),
+                Crop.GetLocalizedCrop("spring","Parsnip",4,MyHelper),
+                Crop.GetLocalizedCrop("spring","Potato",6,MyHelper),
+                Crop.GetLocalizedCrop("spring","Rhubarb",13,MyHelper),
+                Crop.GetLocalizedCrop("spring","Strawberry",8,MyHelper),
+                Crop.GetLocalizedCrop("spring","Tulip",6,MyHelper),
+                Crop.GetLocalizedCrop("spring","Rice",8,MyHelper)
             };
 
             return retval;
@@ -128,17 +129,17 @@ namespace LastDayToPlant
         {
             var retval = new List<Crop>()
             {
-                new Crop("Blueberry",13, MyHelper),
-                new Crop("Hops",11, MyHelper),
-                new Crop("Hot Pepper",5, MyHelper),
-                new Crop("Coffee Bean",10, MyHelper),
-                new Crop("Melon",12, MyHelper),
-                new Crop("Poppy",7, MyHelper),
-                new Crop("Radish",6, MyHelper),
-                new Crop("Red Cabbage",9, MyHelper),
-                new Crop("Starfruit",13, MyHelper),
-                new Crop("Summer Spangle",8, MyHelper),
-                new Crop("Tomato",11, MyHelper)
+                Crop.GetLocalizedCrop("summer","Blueberry",13, MyHelper),
+                Crop.GetLocalizedCrop("summer","Hops",11,MyHelper),
+                Crop.GetLocalizedCrop("summer","Hot Pepper",5,MyHelper),
+                Crop.GetLocalizedCrop("summer","Coffee Bean",10,MyHelper),
+                Crop.GetLocalizedCrop("summer","Melon",12,MyHelper),
+                Crop.GetLocalizedCrop("summer","Poppy",7,MyHelper),
+                Crop.GetLocalizedCrop("summer","Radish",6,MyHelper),
+                Crop.GetLocalizedCrop("summer","Red Cabbage",9,MyHelper),
+                Crop.GetLocalizedCrop("summer","Starfruit",13,MyHelper),
+                Crop.GetLocalizedCrop("summer","Summer Spangle",8,MyHelper),
+                Crop.GetLocalizedCrop("summer","Tomato",11,MyHelper)
             };
 
             return retval;
@@ -148,20 +149,20 @@ namespace LastDayToPlant
         {
             var retval = new List<Crop>()
             {
-                new Crop("Wheat",4, MyHelper),
-                new Crop("Corn",14, MyHelper),
-                new Crop("Amaranth",7, MyHelper),
-                new Crop("Artichoke",8, MyHelper),
-                new Crop("Beet",6, MyHelper),
-                new Crop("Bok Choy",4, MyHelper),
-                new Crop("Cranberries",7, MyHelper),
-                new Crop("Eggplant",5, MyHelper),
-                new Crop("Sunflower",8, MyHelper),
-                new Crop("Fairy Rose",12, MyHelper),
-                new Crop("Grape",10, MyHelper),
-                new Crop("Pumpkin",13, MyHelper),
-                new Crop("Yam",10, MyHelper),
-                new Crop("Ancient Fruit",28, MyHelper)
+                Crop.GetLocalizedCrop("fall","Wheat",4, MyHelper),
+                Crop.GetLocalizedCrop("fall","Corn",14,MyHelper),
+                Crop.GetLocalizedCrop("fall","Amaranth",7,MyHelper),
+                Crop.GetLocalizedCrop("fall","Artichoke",8,MyHelper),
+                Crop.GetLocalizedCrop("fall","Beet",6,MyHelper),
+                Crop.GetLocalizedCrop("fall","Bok Choy",4,MyHelper),
+                Crop.GetLocalizedCrop("fall","Cranberries",7,MyHelper),
+                Crop.GetLocalizedCrop("fall","Eggplant",5,MyHelper),
+                Crop.GetLocalizedCrop("fall","Sunflower",8,MyHelper),
+                Crop.GetLocalizedCrop("fall","Fairy Rose",12,MyHelper),
+                Crop.GetLocalizedCrop("fall","Grape",10,MyHelper),
+                Crop.GetLocalizedCrop("fall","Pumpkin",13,MyHelper),
+                Crop.GetLocalizedCrop("fall","Yam",10,MyHelper),
+                Crop.GetLocalizedCrop("fall","Ancient Fruit",28,MyHelper)
             };
 
             return retval;
