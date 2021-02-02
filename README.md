@@ -12,15 +12,18 @@ v1.0.0 - Initial Release
 - Start the game to create the `config.json` file
 
 # Configuration
-Currently, there are four settings that can be toggled in the `config.json` file. They are:
-- IsAgriculturist
-- ShowSpeedGro
-- ShowDeluxeSpeedGro
-- ShowHyperSpeedGro
+For example, in addition to a notification on Day 16 of Spring for Cauliflower, if you enable all options, you will also get a notification on Days 18, 19, and 20 for Speed Gro, Deluxe Speed Gro, and Hyper Speed Gro, respectively, for Cauliflower.
 
-They are all false by default. Soon the `IsAgriculturist` flag will be determined automatically, but for now it is a flag.
+The `config.json` file looks like this:
 
-If any of the others are set to `true`, then a new message will show on the appropriate day with a message that tells you which type of Speed Gro to use if you still want to harvest.
+    {
+      "IsAgriculturist": false,
+      "ShowSpeedGro": false,
+      "ShowDeluxeSpeedGro": false,
+      "ShowHyperSpeedGro": false
+    }
+
+The `IsAgriculturist` flag will soon be removed by an automated check. When `true`, it accounts for the 10% growth rate boost given by that profession.
 
 # Supported Languages
 - English
