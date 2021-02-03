@@ -8,7 +8,7 @@ namespace LastDayToPlant
 {
     class ModConfig
     {
-        public bool IsAgriculturist { get; set; } = false;
+        public bool ShowBaseCrops { get; set; } = true;
         public bool ShowSpeedGro { get; set; } = false;
         public bool ShowDeluxeSpeedGro { get; set; } = false;
         public bool ShowHyperSpeedGro { get; set; } = false;

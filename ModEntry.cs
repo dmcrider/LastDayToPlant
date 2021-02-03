@@ -31,6 +31,19 @@ namespace LastDayToPlant
 
         private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)
         {
+            // Check if the farmer has the agriculturist profession
+            var farmers = Game1.getAllFarmers();
+
+            foreach(var farmer in farmers)
+            {
+                if(farmer.IsMainPlayer && farmer.getProfessionForSkill(Farmer.farmingSkill,10) == Farmer.agriculturist)
+                {
+                    FarmingSkills.IsAgriculturist = true;
+                    break;
+                }
+            }
+
+            // Load the Base Crops
             var currentDay = SDate.From(Game1.Date).Day;
             var currentSeason = SDate.From(Game1.Date).Season;
 
@@ -58,16 +71,16 @@ namespace LastDayToPlant
             {
                 var daysLeft = crop.DaysToMature + day;
 
-                if (daysLeft == DaysInAMonth)
+                if (daysLeft == DaysInAMonth && MyConfig.ShowBaseCrops)
                 {
                     Game1.addHUDMessage(new HUDMessage(crop.Message, HUDMessage.newQuest_type));
                 }
 
                 double boostedDaysLeft = crop.DaysToMature;
 
-                if (MyConfig.IsAgriculturist)
+                if (FarmingSkills.IsAgriculturist)
                 {
-                    boostedDaysLeft -= crop.DaysToMature * FarmingSkills.Agriculturist;
+                    boostedDaysLeft -= crop.DaysToMature * FarmingSkills.AgriculturistGrowthRate;
                 }
 
                 if (MyConfig.ShowSpeedGro)
