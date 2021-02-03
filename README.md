@@ -28,9 +28,9 @@ The `config.json` file looks like this:
 The `IsAgriculturist` flag that was present in previous versions has been removed and is now automatically determined (based on the main player, if in multiplayer).
 
 # Running into issues?
-If something is going wrong, please let me know by [submitting an issue on GitHub](https://github.com/dmcrider/LastDayToPlant/issues/new), or email me directly at [mailto:mods@dayloncrider.com](mods@dayloncrider.com). I try my best to test multiple scenarios, but I can't test everything.
+If something is going wrong, please let me know by [submitting an issue on GitHub](https://github.com/dmcrider/LastDayToPlant/issues/new), or email me directly at [mods@dayloncrider.com](mailto:mods@dayloncrider.com). I try my best to test multiple scenarios, but I can't test everything.
 
-Want early access? Have a desire to help test releases before they go public? Send me an email at [mailto:mods@dayloncrider.com](mods@dayloncrider.com).
+Want early access? Have a desire to help test releases before they go public? Send me an email at [mods@dayloncrider.com](mailto:mods@dayloncrider.com).
 
 # Supported Languages
 - English
