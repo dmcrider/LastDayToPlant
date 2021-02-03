@@ -35,7 +35,7 @@ Want early access? Have a desire to help test releases before they go public? Se
 # Supported Languages
 - English
 - Spanish
-- Brazilian Portuguese
+- Brazilian Portuguese (thanks to @Duckexza)
 - French (In Progress)
 
 # Like what I do?
