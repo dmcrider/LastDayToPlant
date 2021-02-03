@@ -35,8 +35,11 @@ Want early access? Have a desire to help test releases before they go public? Se
 # Supported Languages
 - English
 - Spanish
-- Brazilian Portuguese (thanks to @Duckexza)
+- Brazilian Portuguese
 - French (In Progress)
+
+# Special Thanks
+[@Duckexza](https://github.com/Duckexza) - Brazilian translation
 
 # Like what I do?
 If you enjoy the content I create, a donation is greatly appreciated (though NEVER required!). You can make a donation [on my website](https://www.dayloncrider.com/donations)
