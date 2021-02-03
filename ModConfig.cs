@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace LastDayToPlant
 {
-    class ModConfig
+    public class ModConfig
     {
         public bool ShowBaseCrops { get; set; } = true;
         public bool ShowSpeedGro { get; set; } = false;
         public bool ShowDeluxeSpeedGro { get; set; } = false;
         public bool ShowHyperSpeedGro { get; set; } = false;
+        //public bool GetOtherModsAndEnable { get; set; } = false;
+        public bool PPJAFruitsAndVeggies { get; set; } = false;
     }
 }

@@ -23,11 +23,11 @@ namespace LastDayToPlant
             DaysToMature = daysToMature;
         }
 
-        public static Crop GetLocalizedCrop(string season, string name, int daysToMature, IModHelper helper)
+        public static Crop GetLocalizedCrop(string season, string name, int daysToMature, IModHelper helper, string mod = "")
         {
             var tagName = name.Replace(" ", "").Trim().ToLower();
 
-            var crop = new Crop(helper.Translation.Get($"crop.{season}.{tagName}", new { cropName = name }), daysToMature)
+            var crop = new Crop(helper.Translation.Get($"crop.{season}.{tagName}{(mod == "" ? "" : $".{mod.Replace(" ","").Trim().ToLower()}")}", new { cropName = name }), daysToMature)
             {
                 Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = name }),
                 MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = name }),

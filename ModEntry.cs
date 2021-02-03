@@ -12,20 +12,28 @@ namespace LastDayToPlant
         private List<Crop> SpringCrops;
         private List<Crop> SummerCrops;
         private List<Crop> FallCrops;
+        private List<Crop> WinterCrops;
 
         private const int DaysInAMonth = 28;
         private IModHelper MyHelper;
         private ModConfig MyConfig;
+        private ModCompat ModCompat;
 
         public override void Entry(IModHelper helper)
         {
+            // Initialize objects we'll need later
             MyHelper = helper;
             MyConfig = MyHelper.ReadConfig<ModConfig>();
-            this.Monitor.Log("Config Loaded", LogLevel.Info);
+            ModCompat = new ModCompat();
+            ModCompat.ConfigureMods(MyConfig);
+
+            // Enable the crops
             SpringCrops = SetSpringCrops();
             SummerCrops = SetSummerCrops();
             FallCrops = SetFallCrops();
+            WinterCrops = new List<Crop>(); // No default crops in winter, but potentially some from mods
 
+            // All flags are checked from inside this method
             MyHelper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
         }
 
@@ -43,7 +51,6 @@ namespace LastDayToPlant
                 }
             }
 
-            // Load the Base Crops
             var currentDay = SDate.From(Game1.Date).Day;
             var currentSeason = SDate.From(Game1.Date).Season;
 
@@ -59,7 +66,9 @@ namespace LastDayToPlant
                     ShowCrops(FallCrops, currentDay);
                     break;
                 case "winter":
-                    return; // No crops to plant in winter
+                    ModCompat.LoadCrops(WinterCrops, "winter", MyHelper);
+                    ShowCrops(WinterCrops, currentDay);
+                    break;
                 default:
                     return;
             }
@@ -134,6 +143,9 @@ namespace LastDayToPlant
                 Crop.GetLocalizedCrop("spring","Tulip",6,MyHelper),
                 Crop.GetLocalizedCrop("spring","Rice",8,MyHelper)
             };
+
+
+            ModCompat.LoadCrops(retval, "spring", MyHelper);
 
             return retval;
         }
