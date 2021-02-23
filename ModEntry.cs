@@ -68,54 +68,59 @@ namespace LastDayToPlant
         private void ShowCrops(List<Crop> cropList, int day)
         {
             foreach (Crop crop in cropList)
-            {
-                var daysLeft = crop.DaysToMature + day;
-
-                if (daysLeft == DaysInAMonth && MyConfig.ShowBaseCrops)
+            {                
+                if (MyConfig.ShowBaseCrops)
                 {
-                    Game1.addHUDMessage(new HUDMessage(crop.Message, HUDMessage.newQuest_type));
-                }
+                    var DaysToMatureBoosted = ActualGrowRate(crop, Fertilizer.None);
 
-                double boostedDaysLeft = crop.DaysToMature;
-
-                if (FarmingSkills.IsAgriculturist)
-                {
-                    boostedDaysLeft -= crop.DaysToMature * FarmingSkills.AgriculturistGrowthRate;
+                    if (DaysToMatureBoosted + day == DaysInAMonth)
+                    {
+                        Game1.addHUDMessage(new HUDMessage(crop.Message, HUDMessage.newQuest_type));
+                    }
                 }
 
                 if (MyConfig.ShowSpeedGro)
                 {
-                    boostedDaysLeft -= crop.DaysToMature * Fertilizer.SpeedGro;
-                    if(boostedDaysLeft == DaysInAMonth)
+                    var DaysToMatureBoosted = ActualGrowRate(crop, Fertilizer.SpeedGro);
+
+                    if (DaysToMatureBoosted + day == DaysInAMonth)
                     {
                         Game1.addHUDMessage(new HUDMessage(crop.MessageSpeedGro, HUDMessage.newQuest_type));
                     }
-                    // Reset the value so we can correctly show the next one
-                    boostedDaysLeft += crop.DaysToMature * Fertilizer.SpeedGro;
                 }
 
                 if (MyConfig.ShowDeluxeSpeedGro)
                 {
-                    boostedDaysLeft -= crop.DaysToMature * Fertilizer.DeluxeSpeedGro;
-                    if (boostedDaysLeft == DaysInAMonth)
+                    var DaysToMatureBoosted = ActualGrowRate(crop, Fertilizer.DeluxeSpeedGro);
+
+                    if (DaysToMatureBoosted + day == DaysInAMonth)
                     {
                         Game1.addHUDMessage(new HUDMessage(crop.MessageDelxueSpeedGro, HUDMessage.newQuest_type));
                     }
-                    // Reset the value so we can correctly show the next one
-                    boostedDaysLeft += crop.DaysToMature * Fertilizer.DeluxeSpeedGro;
                 }
 
                 if (MyConfig.ShowHyperSpeedGro)
                 {
-                    boostedDaysLeft -= crop.DaysToMature * Fertilizer.HyperSpeedGro;
-                    if (boostedDaysLeft == DaysInAMonth)
+                    var DaysToMatureBoosted = ActualGrowRate(crop, Fertilizer.HyperSpeedGro);
+
+                    if (DaysToMatureBoosted + day == DaysInAMonth)
                     {
                         Game1.addHUDMessage(new HUDMessage(crop.MessageHyperSpeedGro, HUDMessage.newQuest_type));
                     }
-                    // Reset the value so we can correctly show the next one
-                    boostedDaysLeft += crop.DaysToMature * Fertilizer.HyperSpeedGro;
                 }
             }
+        }
+
+        private int ActualGrowRate(Crop crop, double fertilizerFactor)
+        {
+            double actualDaysToMature = crop.DaysToMature - crop.DaysToMature * fertilizerFactor;
+
+            if (FarmingSkills.IsAgriculturist)
+            {
+                actualDaysToMature = crop.DaysToMature - crop.DaysToMature * (fertilizerFactor + FarmingSkills.AgriculturistGrowthRate);
+                return (int)actualDaysToMature;
+            }
+            return (int)actualDaysToMature;
         }
 
         private List<Crop> SetSpringCrops()
