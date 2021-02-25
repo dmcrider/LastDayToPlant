@@ -40,6 +40,7 @@ Want early access? Have a desire to help test releases before they go public? Se
 
 # Special Thanks
 [@Duckexza](https://github.com/Duckexza) - Brazilian translation
+
 [@4x4cheesecake](https://github.com/4x4cheesecake) - Fix for [#16](https://github.com/dmcrider/LastDayToPlant/issues/16)
 
 # Like what I do?
