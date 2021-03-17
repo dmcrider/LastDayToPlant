@@ -12,6 +12,7 @@ namespace LastDayToPlant
         private List<Crop> SpringCrops;
         private List<Crop> SummerCrops;
         private List<Crop> FallCrops;
+        private List<Crop> WinterCrops;
 
         private const int DaysInAMonth = 28;
         private IModHelper MyHelper;
@@ -21,12 +22,40 @@ namespace LastDayToPlant
         {
             MyHelper = helper;
             MyConfig = MyHelper.ReadConfig<ModConfig>();
-            this.Monitor.Log("Config Loaded", LogLevel.Info);
-            SpringCrops = SetSpringCrops();
-            SummerCrops = SetSummerCrops();
-            FallCrops = SetFallCrops();
+
+            if (MyConfig.IncludeBaseGameCrops)
+            {
+                SpringCrops = SetSpringCrops();
+                SummerCrops = SetSummerCrops();
+                FallCrops = SetFallCrops();
+                WinterCrops = new List<Crop>();
+            }
+            else
+            {
+                SpringCrops = new List<Crop>();
+                SummerCrops = new List<Crop>();
+                FallCrops = new List<Crop>();
+                WinterCrops = new List<Crop>();
+            }
+
+            List<ModCompat> modsToShow = new List<ModCompat>();
+
+            if(MyConfig.PPJAFruitsAndVeggiesPath != "")
+            {
+                this.Monitor.Log("Loading [PPJA] Fruits and Veggies", LogLevel.Info);
+                ModCompat ppjaFruitsAndVeggies = new ModCompat("[PPJA] Fruits and Veggies", MyConfig.PPJAFruitsAndVeggiesPath);
+                modsToShow.Add(ppjaFruitsAndVeggies);
+            }
+            // other mods go here
+
+            foreach(ModCompat mod in modsToShow)
+            {
+                mod.LoadCrops(SpringCrops, SummerCrops, FallCrops, WinterCrops, MyHelper);
+            }
 
             MyHelper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
+
+            this.Monitor.Log(string.Join(",",SummerCrops), LogLevel.Info);
         }
 
         private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)
@@ -59,7 +88,8 @@ namespace LastDayToPlant
                     ShowCrops(FallCrops, currentDay);
                     break;
                 case "winter":
-                    return; // No crops to plant in winter
+                    ShowCrops(WinterCrops, currentDay);
+                    break;
                 default:
                     return;
             }
