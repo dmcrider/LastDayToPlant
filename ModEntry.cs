@@ -40,22 +40,52 @@ namespace LastDayToPlant
 
             List<ModCompat> modsToShow = new List<ModCompat>();
 
+            // Load Mods
             if(MyConfig.PPJAFruitsAndVeggiesPath != "")
             {
                 this.Monitor.Log("Loading [PPJA] Fruits and Veggies", LogLevel.Info);
-                ModCompat ppjaFruitsAndVeggies = new ModCompat("[PPJA] Fruits and Veggies", MyConfig.PPJAFruitsAndVeggiesPath);
+                ModCompat ppjaFruitsAndVeggies = new ModCompat("[PPJA] Fruits and Veggies", MyConfig.PPJAFruitsAndVeggiesPath + @"\[JA] Fruits and Veggies\Crops\");
                 modsToShow.Add(ppjaFruitsAndVeggies);
             }
-            // other mods go here
 
-            foreach(ModCompat mod in modsToShow)
+            if (MyConfig.PPJAFantasyCropsPath != "")
             {
-                mod.LoadCrops(SpringCrops, SummerCrops, FallCrops, WinterCrops, MyHelper);
+                this.Monitor.Log("Loading [PPJA] Fantasy Crops", LogLevel.Info);
+                ModCompat ppjaFruitsAndVeggies = new ModCompat("[PPJA] Fantasy Crops", MyConfig.PPJAFantasyCropsPath + @"\[JA] Fantasy Crops\Crops\");
+                modsToShow.Add(ppjaFruitsAndVeggies);
+            }
+
+            if (MyConfig.PPJAAncientCropsPath != "")
+            {
+                this.Monitor.Log("Loading [PPJA] Ancient Crops", LogLevel.Info);
+                ModCompat ppjaFruitsAndVeggies = new ModCompat("[PPJA] Ancient Crops", MyConfig.PPJAAncientCropsPath + @"\[JA] Ancient Crops\Crops\");
+                modsToShow.Add(ppjaFruitsAndVeggies);
+            }
+
+            if (MyConfig.PPJACannabisKitPath != "")
+            {
+                this.Monitor.Log("Loading [PPJA] Cannabis Kit", LogLevel.Info);
+                ModCompat ppjaFruitsAndVeggies = new ModCompat("[PPJA] Cannabis Kit", MyConfig.PPJACannabisKitPath + @"\[JA] Cannabis Kit\Crops\");
+                modsToShow.Add(ppjaFruitsAndVeggies);
+            }
+
+            if (MyConfig.BonstersFruitAndVeggiesPath != "")
+            {
+                this.Monitor.Log("Loading Bonster's Fruit & Veggies", LogLevel.Info);
+                ModCompat ppjaFruitsAndVeggies = new ModCompat("Bonster's Fruit & Veggies", MyConfig.BonstersFruitAndVeggiesPath + @"\Crops\");
+                modsToShow.Add(ppjaFruitsAndVeggies);
+            }
+
+            foreach (ModCompat mod in modsToShow)
+            {
+                ModCompatResult result = mod.LoadCrops(SpringCrops, SummerCrops, FallCrops, WinterCrops, MyHelper);
+
+                if (result == ModCompatResult.Success) { continue; }
+
+                this.Monitor.Log($"Unable to load {mod.Name}. Error Code: {result}", LogLevel.Error);
             }
 
             MyHelper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
-
-            this.Monitor.Log(string.Join(",",SummerCrops), LogLevel.Info);
         }
 
         private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)

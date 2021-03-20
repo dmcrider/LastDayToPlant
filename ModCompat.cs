@@ -30,60 +30,116 @@ namespace LastDayToPlant
             IsEnabled = false;
         }
 
-        public void LoadCrops(List<Crop> spring, List<Crop> summer, List<Crop> fall, List<Crop> winter, IModHelper helper)
+        public ModCompatResult LoadCrops(List<Crop> spring, List<Crop> summer, List<Crop> fall, List<Crop> winter, IModHelper helper)
         {
-            DirectoryInfo baseCropFolder = new DirectoryInfo(BaseFolderName);
-
-            List<string> addedCrops = new List<string>();
-
-            foreach(var folder in baseCropFolder.GetDirectories())
+            try
             {
-                foreach(var cropFile in folder.GetFiles())
+                DirectoryInfo baseCropFolder = new DirectoryInfo(BaseFolderName);
+
+                List<string> addedCrops = new List<string>();
+
+                foreach (var folder in baseCropFolder.GetDirectories())
                 {
-                    if (addedCrops.Contains(folder.Name)) { continue; }
-
-                    if (cropFile.Name == "crop.json")
+                    foreach (var cropFile in folder.GetFiles())
                     {
-                        var json = JObject.Parse(File.ReadAllText(cropFile.FullName));
-                        string name = (string)json["Name"];
-                        int daysToMature = GetDaysToMature((string)json["SeedDescription"]);
-                        JArray seasons = (JArray)json["Seasons"];
+                        if (addedCrops.Contains(folder.Name)) { continue; }
 
-                        Crop currentCrop = new Crop(name,daysToMature)
+                        if (cropFile.Name == "crop.json")
                         {
-                            Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = name }),
-                            MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = name }),
-                            MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = name }),
-                            MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = name })
-                        };
+                            ModCompatResult result = GetCrop(cropFile, helper, spring, summer, fall, winter);
 
-                        foreach(JValue seasonObj in seasons)
-                        {
-                            string season = seasonObj.Value.ToString();
-
-                            switch (season)
+                            // If it was a success, just move on
+                            if(result != ModCompatResult.Success)
                             {
-                                case "spring":
-                                    spring.Add(currentCrop);
-                                    break;
-                                case "summer":
-                                    summer.Add(currentCrop);
-                                    break;
-                                case "fall":
-                                    fall.Add(currentCrop);
-                                    break;
-                                case "winter":
-                                    winter.Add(currentCrop);
-                                    break;
-                                default:
-                                    continue;
+                                switch (result)
+                                {
+                                    case ModCompatResult.BadFile:
+                                        throw new Exception();
+                                    case ModCompatResult.DirectoryNotFound:
+                                        throw new DirectoryNotFoundException();
+                                    case ModCompatResult.FileDoesNotExist:
+                                        throw new FileNotFoundException();
+                                    default:
+                                        break;
+                                }
                             }
                         }
-                    }
 
-                    addedCrops.Add(folder.Name); // Keep track of the ones we've added
-                    // for some reason it was adding them 3 times...
+                        // Keep track of the ones we've added
+                        // for some reason it was adding them 3 times...
+                        addedCrops.Add(folder.Name);
+                    }
                 }
+
+                return ModCompatResult.Success;
+            }
+            catch(DirectoryNotFoundException)
+            {
+                return ModCompatResult.DirectoryNotFound;
+            }
+            catch (FileNotFoundException)
+            {
+                return ModCompatResult.FileDoesNotExist;
+            }
+            catch (Exception)
+            {
+                return ModCompatResult.BadFile;
+            }
+        }
+
+        private ModCompatResult GetCrop(FileInfo cropFile, IModHelper helper, List<Crop> spring, List<Crop> summer, List<Crop> fall, List<Crop> winter)
+        {
+            try
+            {
+                var json = JObject.Parse(File.ReadAllText(cropFile.FullName));
+                string name = (string)json["Name"];
+                int daysToMature = GetDaysToMature((string)json["SeedDescription"]);
+                JArray seasons = (JArray)json["Seasons"];
+
+                Crop currentCrop = new Crop(name, daysToMature)
+                {
+                    Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = name }),
+                    MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = name }),
+                    MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = name }),
+                    MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = name })
+                };
+
+                foreach (JValue seasonObj in seasons)
+                {
+                    string season = seasonObj.Value.ToString();
+
+                    switch (season)
+                    {
+                        case "spring":
+                            spring.Add(currentCrop);
+                            break;
+                        case "summer":
+                            summer.Add(currentCrop);
+                            break;
+                        case "fall":
+                            fall.Add(currentCrop);
+                            break;
+                        case "winter":
+                            winter.Add(currentCrop);
+                            break;
+                        default:
+                            continue;
+                    }
+                }
+
+                return ModCompatResult.Success;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return ModCompatResult.DirectoryNotFound;
+            }
+            catch (FileNotFoundException)
+            {
+                return ModCompatResult.FileDoesNotExist;
+            }
+            catch (Exception)
+            {
+                return ModCompatResult.BadFile;
             }
         }
 
@@ -108,5 +164,13 @@ namespace LastDayToPlant
                 return -1;
             }
         }
+    }
+
+    public enum ModCompatResult
+    {
+        Success,
+        DirectoryNotFound,
+        FileDoesNotExist,
+        BadFile
     }
 }

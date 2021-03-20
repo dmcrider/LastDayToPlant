@@ -14,5 +14,9 @@ namespace LastDayToPlant
         public bool ShowDeluxeSpeedGro { get; set; } = false;
         public bool ShowHyperSpeedGro { get; set; } = false;
         public string PPJAFruitsAndVeggiesPath { get; set; } = "";
+        public string PPJAFantasyCropsPath { get; set; } = "";
+        public string PPJAAncientCropsPath { get; set; } = "";
+        public string PPJACannabisKitPath { get; set; } = "";
+        public string BonstersFruitAndVeggiesPath { get; set; } = "";
     }
 }
