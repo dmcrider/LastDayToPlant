@@ -27,13 +27,12 @@ namespace LastDayToPlant
         {
             var tagName = name.Replace(" ", "").Trim().ToLower();
 
-            var crop = new Crop(helper.Translation.Get($"crop.{season}.{tagName}", new { cropName = name }), daysToMature)
-            {
-                Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = name }),
-                MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = name }),
-                MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = name }),
-                MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = name })
-            };
+            Crop crop = new Crop(helper.Translation.Get($"crop.{season}.{tagName}", new { cropName = name }), daysToMature);
+
+            crop.Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = crop.Name });
+            crop.MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = crop.Name });
+            crop.MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = crop.Name });
+            crop.MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = crop.Name });
 
             return crop;
         }
