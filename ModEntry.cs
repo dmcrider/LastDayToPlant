@@ -30,6 +30,17 @@ namespace LastDayToPlant
             LoadBaseGameCrops();
             LoadModCrops();
 
+            // Localize the messages
+            foreach(var crop in AllCrops)
+            {
+                var baseName = crop.Name;
+                crop.Name = helper.Translation.Get($"crop.{baseName}");
+                crop.Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = crop.Name });
+                crop.MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = crop.Name });
+                crop.MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = crop.Name });
+                crop.MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = crop.Name });
+            }
+
             MyHelper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
         }
 

@@ -37,15 +37,9 @@ namespace LastDayToPlant
             return seasons.First() == season;
         }
 
-        public static Crop GetLocalizedCrop(string name, int daysToMature, IModHelper helper)
+        public void LocalizeMessages(IModHelper helper)
         {
-            Crop crop = new Crop(name, daysToMature);
-            crop.Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = crop.Name });
-            crop.MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = crop.Name });
-            crop.MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = crop.Name });
-            crop.MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = crop.Name });
-
-            return crop;
+            
         }
 
         public static Crop FromModFile(string cropFilePath)
