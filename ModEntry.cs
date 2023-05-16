@@ -185,6 +185,3 @@ namespace LastDayToPlant
         winter
     }
 }
-/*
- 
- */

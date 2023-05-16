@@ -1,5 +1,4 @@
 ﻿using StardewModdingAPI;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System;
@@ -39,7 +38,7 @@ namespace LastDayToPlant
 
         public void LocalizeMessages(IModHelper helper)
         {
-            
+            // TODO: Implement this
         }
 
         public static Crop FromModFile(string cropFilePath)
@@ -69,6 +68,13 @@ namespace LastDayToPlant
             }
             var start = desc.IndexOf(startWord);
             var end = desc.IndexOf(endWord);
+            if(start == -1 || end == -1)
+            {
+                // TODO: Update this chunk for conflicting mod.
+                // See Issue #20 on GitHub
+                crop.DaysToMature = 0;
+                return crop;
+            }
             var splits = desc.Substring(start, end - start).Split(' ');
             foreach(var split in splits)
             {
