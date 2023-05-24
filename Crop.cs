@@ -76,8 +76,6 @@ namespace LastDayToPlant
             var end = desc.IndexOf(endWord);
             if(start == -1 || end == -1)
             {
-                // TODO: Update this chunk for conflicting mod.
-                // See Issue #20 on GitHub
                 crop.DaysToMature = 0;
                 return crop;
             }
