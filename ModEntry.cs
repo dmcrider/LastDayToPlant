@@ -18,12 +18,13 @@ namespace LastDayToPlant
         private const int DaysInAMonth = 28;
         private IModHelper MyHelper;
         private ModConfig MyConfig;
-        private readonly List<Crop> AllCrops = new List<Crop>();
+        private readonly List<Crop> AllCrops = new();
         internal static IMonitor InternalMonitor;
 
         public override void Entry(IModHelper helper)
         {
             MyHelper = helper;
+            I18n.Init(helper.Translation);
             MyConfig = MyHelper.ReadConfig<ModConfig>();
             InternalMonitor = this.Monitor;
 
@@ -34,11 +35,7 @@ namespace LastDayToPlant
             foreach(var crop in AllCrops)
             {
                 var baseName = crop.Name;
-                crop.Name = helper.Translation.Get($"crop.{baseName}");
-                crop.Message = helper.Translation.Get("notification.crop.no-fertilizer", new { cropName = crop.Name });
-                crop.MessageSpeedGro = helper.Translation.Get("notification.crop.speed-gro", new { cropName = crop.Name });
-                crop.MessageDelxueSpeedGro = helper.Translation.Get("notification.crop.deluxe-speed-gro", new { cropName = crop.Name });
-                crop.MessageHyperSpeedGro = helper.Translation.Get("notification.crop.hyper-speed-gro", new { cropName = crop.Name });
+                crop.Localize(MyHelper, baseName);
             }
 
             MyHelper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
@@ -94,7 +91,7 @@ namespace LastDayToPlant
 
         private void LoadModCrops()
         {
-            var modsPath = Path.Combine(Constants.ExecutionPath, "Mods");
+            var modsPath = Path.Combine(Constants.GamePath, "Mods");
             var modsPathExists = Directory.Exists(modsPath);
 
             if (modsPathExists)

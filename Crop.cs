@@ -36,9 +36,15 @@ namespace LastDayToPlant
             return seasons.First() == season;
         }
 
-        public void LocalizeMessages(IModHelper helper)
+        public void Localize(IModHelper helper, string baseName)
         {
-            // TODO: Implement this
+            // This one can't be handled by I18n because it's dynamic
+            Name = helper.Translation.Get($"crop.{baseName}");
+            // The rest of the messages can though
+            Message = I18n.Notification_Crop_NoFertilizer(Name);
+            MessageSpeedGro = I18n.Notification_Crop_SpeedGro(Name);
+            MessageDelxueSpeedGro = I18n.Notification_Crop_DeluxeSpeedGro(Name);
+            MessageHyperSpeedGro = I18n.Notification_Crop_HyperSpeedGro(Name);
         }
 
         public static Crop FromModFile(string cropFilePath)
