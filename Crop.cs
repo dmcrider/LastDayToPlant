@@ -39,7 +39,7 @@ namespace LastDayToPlant
         public void Localize(IModHelper helper, string baseName)
         {
             // This one can't be handled by I18n because it's dynamic
-            Name = helper.Translation.Get($"crop.{baseName}");
+            Name = helper.Translation.Get($"crop.{baseName.Replace(" ", "")}");
             // The rest of the messages can though
             Message = I18n.Notification_Crop_NoFertilizer(Name);
             MessageSpeedGro = I18n.Notification_Crop_SpeedGro(Name);
