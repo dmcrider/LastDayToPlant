@@ -64,16 +64,16 @@ namespace LastDayToPlant
             var currentSeason = SDate.From(Game1.Date).Season;
             switch (currentSeason)
             {
-                case "spring":
+                case StardewValley.Season.Spring:
                     ShowCrops(Season.spring, currentDay, currentYear);
                     break;
-                case "summer":
+                case StardewValley.Season.Summer:
                     ShowCrops(Season.summer, currentDay, currentYear);
                     break;
-                case "fall":
+                case StardewValley.Season.Fall:
                     ShowCrops(Season.fall, currentDay, currentYear);
                     break;
-                case "winter":
+                case StardewValley.Season.Winter:
                     ShowCrops(Season.winter, currentDay, currentYear);
                     break;
                 default:
@@ -94,7 +94,7 @@ namespace LastDayToPlant
 
         private void LoadModCrops()
         {
-            var modsPath = Path.Combine(Constants.ExecutionPath, "Mods");
+            var modsPath = Path.Combine(Constants.GamePath, "Mods");
             var modsPathExists = Directory.Exists(modsPath);
 
             if (modsPathExists)
