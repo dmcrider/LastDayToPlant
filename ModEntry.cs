@@ -167,10 +167,10 @@ namespace LastDayToPlant
         {
             if (FarmingSkills.IsAgriculturist)
             {
-                return (int)(crop.DaysToMature - (crop.DaysToMature * (factor + FarmingSkills.AgriculturistGrowthRate)));
+                return (int)(crop.DaysToGrow - (crop.DaysToGrow * (factor + FarmingSkills.AgriculturistGrowthRate)));
             }
 
-            return (int)(crop.DaysToMature - (crop.DaysToMature * factor));
+            return (int)(crop.DaysToGrow - (crop.DaysToGrow * factor));
         }
     }
 

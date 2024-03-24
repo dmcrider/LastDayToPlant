@@ -10,7 +10,7 @@ namespace LastDayToPlant
     public class Crop
     {
         public string Name { get; set; }
-        public int DaysToMature { get; set; }
+        public int DaysToGrow { get; set; }
         public List<Season> Seasons { get; set; }
         public int DaysToMatureIrrigated { get; set; } = 0;
         public int AvailableYear { get; set; } = 1;
@@ -22,10 +22,10 @@ namespace LastDayToPlant
         public string MessageHyperSpeedGro { get; set; }
 
 
-        public Crop(string name, int daysToMature)
+        public Crop(string name, int daysToGrow)
         {
             Name = name;
-            DaysToMature = daysToMature;
+            DaysToGrow = daysToGrow;
         }
 
         public Crop() { }
@@ -76,7 +76,7 @@ namespace LastDayToPlant
             var end = desc.IndexOf(endWord);
             if(start == -1 || end == -1)
             {
-                crop.DaysToMature = 0;
+                crop.DaysToGrow = 0;
                 return crop;
             }
             var splits = desc.Substring(start, end - start).Split(' ');
@@ -85,7 +85,7 @@ namespace LastDayToPlant
                 var isNumber = int.TryParse(split, out int days);
                 if (isNumber)
                 {
-                    crop.DaysToMature = days;
+                    crop.DaysToGrow = days;
                 }
             }
 
