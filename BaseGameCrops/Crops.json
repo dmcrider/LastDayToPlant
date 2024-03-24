@@ -5,7 +5,7 @@
     "DaysToGrow": 7,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -14,7 +14,7 @@
     "DaysToGrow": 12,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -23,7 +23,7 @@
     "DaysToGrow": 10,
     "Regrowth": 2,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -32,7 +32,7 @@
     "DaysToGrow": 4,
     "Regrowth": 0,
     "AvailableYear": 2,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -41,7 +41,7 @@
     "DaysToGrow": 10,
     "Regrowth": 3,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -50,7 +50,7 @@
     "DaysToGrow": 6,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -59,7 +59,7 @@
     "DaysToGrow": 4,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -68,7 +68,7 @@
     "DaysToGrow": 6,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -77,7 +77,7 @@
     "DaysToGrow": 13,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -86,7 +86,7 @@
     "DaysToGrow": 8,
     "Regrowth": 4,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -95,7 +95,7 @@
     "DaysToGrow": 6,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -103,7 +103,7 @@
     "Seasons": [ "spring" ],
     "DaysToGrow": 8,
     "Regrowth": 0,
-    "Irrigated": 6,
+    "DaysToGrowIrrigated": 6,
     "AvailableYear": 1,
     "GingerIsland": false
   },
@@ -113,7 +113,7 @@
     "DaysToGrow": 13,
     "Regrowth": 4,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -122,7 +122,7 @@
     "DaysToGrow": 14,
     "Regrowth": 4,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -131,7 +131,7 @@
     "DaysToGrow": 11,
     "Regrowth": 1,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -140,7 +140,7 @@
     "DaysToGrow": 5,
     "Regrowth": 3,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -149,7 +149,7 @@
     "DaysToGrow": 12,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -158,7 +158,7 @@
     "DaysToGrow": 7,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -167,7 +167,7 @@
     "DaysToGrow": 6,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -176,7 +176,7 @@
     "DaysToGrow": 9,
     "Regrowth": 0,
     "AvailableYear": 2,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -185,7 +185,7 @@
     "DaysToGrow": 13,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -194,7 +194,7 @@
     "DaysToGrow": 8,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -203,7 +203,7 @@
     "DaysToGrow": 8,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -212,7 +212,7 @@
     "DaysToGrow": 11,
     "Regrowth": 4,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -221,7 +221,7 @@
     "DaysToGrow": 4,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -230,7 +230,7 @@
     "DaysToGrow": 7,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -239,7 +239,7 @@
     "DaysToGrow": 8,
     "Regrowth": 0,
     "AvailableYear": 2,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -248,7 +248,7 @@
     "DaysToGrow": 6,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -257,7 +257,7 @@
     "DaysToGrow": 4,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -266,7 +266,7 @@
     "DaysToGrow": 7,
     "Regrowth": 5,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -275,7 +275,7 @@
     "DaysToGrow": 5,
     "Regrowth": 5,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -284,7 +284,7 @@
     "DaysToGrow": 12,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -293,7 +293,7 @@
     "DaysToGrow": 10,
     "Regrowth": 3,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -302,7 +302,7 @@
     "DaysToGrow": 13,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -311,7 +311,7 @@
     "DaysToGrow": 10,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -320,7 +320,7 @@
     "DaysToGrow": 28,
     "Regrowth": 7,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -329,7 +329,7 @@
     "DaysToGrow": 7,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {
@@ -346,7 +346,7 @@
     "DaysToGrow": 10,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated": 7,
+    "DaysToGrowIrrigated": 7,
     "GingerIsland": true
   },
   {
@@ -355,7 +355,7 @@
     "DaysToGrow": 24,
     "Regrowth": 0,
     "AvailableYear": 1,
-    "Irrigated":  0,
+    "DaysToGrowIrrigated": 0,
     "GingerIsland": false
   },
   {

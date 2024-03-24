@@ -12,7 +12,7 @@ namespace LastDayToPlant
         public string Name { get; set; }
         public int DaysToGrow { get; set; }
         public List<Season> Seasons { get; set; }
-        public int DaysToMatureIrrigated { get; set; } = 0;
+        public int DaysToGrowIrrigated { get; set; } = 0;
         public int AvailableYear { get; set; } = 1;
         public bool GingerIsland { get; set; } = false;
 
