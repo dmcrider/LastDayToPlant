@@ -357,5 +357,33 @@
     "AvailableYear": 1,
     "Irrigated":  0,
     "GingerIsland": false
+  },
+  {
+    "Name": "Carrot",
+    "Seasons": [ "spring" ],
+    "DaysToGrow": 3,
+    "Regrowth": 0,
+    "AvailableYear": 1
+  },
+  {
+    "Name": "Summer Squash",
+    "Seasons": [ "summer" ],
+    "DaysToGrow": 6,
+    "Regrowth": 3,
+    "AvailableYear": 1
+  },
+  {
+    "Name": "Broccoli",
+    "Seasons": [ "fall" ],
+    "DaysToGrow": 8,
+    "Regrowth": 4,
+    "AvailableYear": 1
+  },
+  {
+    "Name": "Powdermelon",
+    "Seasons": [ "spring" ],
+    "DaysToGrow": 7,
+    "Regrowth": 0,
+    "AvailableYear": 1
   }
 ]
