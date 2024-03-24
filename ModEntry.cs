@@ -165,12 +165,13 @@ namespace LastDayToPlant
 
         private int CalculateActualGrowRate(Crop crop, double factor)
         {
+            int daysToGrow = crop.DaysToGrowIrrigated > 0 ? crop.DaysToGrowIrrigated : crop.DaysToGrow;
             if (FarmingSkills.IsAgriculturist)
             {
-                return (int)(crop.DaysToGrow - (crop.DaysToGrow * (factor + FarmingSkills.AgriculturistGrowthRate)));
+                return (int)(daysToGrow - (daysToGrow * (factor + FarmingSkills.AgriculturistGrowthRate)));
             }
 
-            return (int)(crop.DaysToGrow - (crop.DaysToGrow * factor));
+            return (int)(daysToGrow - (daysToGrow * factor));
         }
     }
 
