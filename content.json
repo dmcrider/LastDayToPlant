@@ -8,17 +8,9 @@
     },
     {
       "Action": "EditData",
-      "Target": "Data/Objects",
+      "Target": "Data/Furniture",
       "Entries": {
-        "{{ModId}}_PlantingCalendar": {
-          "Name": "{{ModId}}_PlantingCalendar",
-          "DisplayName": "Planting Calendar",
-          "Description": "A calendar that shows the last day each crop can be planted and still harvested.",
-          "Type": "Furniture",
-          "Category": -24,
-          "Price": 1000,
-          "Texture": "Mods/{{ModId}}/planting-calendar"
-        }
+        "{{ModId}}_PlantingCalendar": "Planting Calendar/other/1 1/1 1/1/1000/0/{{i18n: PlantingCalendar_Translated}}"
       }
     },
     {
@@ -32,7 +24,7 @@
           "Condition": "YEAR 2",
           "IgnoreShopPriceModifiers": true
         },
-        "MoveEntries" [
+        "MoveEntries": [
           {
             "Id": "{{ModId}}_PlantingCalendar",
             "BeforeId": "GrassStarter"

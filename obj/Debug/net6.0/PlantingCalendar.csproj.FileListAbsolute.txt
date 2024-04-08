@@ -1,8 +1,0 @@
-D:\_Projects\StardewMods\PlantingCalendar\bin\Debug\net6.0\PlantingCalendar.deps.json
-D:\_Projects\StardewMods\PlantingCalendar\bin\Debug\net6.0\PlantingCalendar.dll
-D:\_Projects\StardewMods\PlantingCalendar\obj\Debug\net6.0\PlantingCalendar.csproj.AssemblyReference.cache
-D:\_Projects\StardewMods\PlantingCalendar\obj\Debug\net6.0\PlantingCalendar.GeneratedMSBuildEditorConfig.editorconfig
-D:\_Projects\StardewMods\PlantingCalendar\obj\Debug\net6.0\PlantingCalendar.AssemblyInfoInputs.cache
-D:\_Projects\StardewMods\PlantingCalendar\obj\Debug\net6.0\PlantingCalendar.AssemblyInfo.cs
-D:\_Projects\StardewMods\PlantingCalendar\obj\Debug\net6.0\PlantingCalendar.csproj.CoreCompileInputs.cache
-D:\_Projects\StardewMods\PlantingCalendar\obj\Debug\net6.0\PlantingCalendar.dll

@@ -1,5 +1,6 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using StardewValley;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,14 @@ namespace PlantingCalendar
     {
         public override void Entry(IModHelper helper)
         {
-            helper.Events.Content.AssetRequested += OnAssetRequested;
+            helper.Events.Input.ButtonPressed += OnButtonPressed;
         }
 
-        private void OnAssetRequested(object? sender, AssetRequestedEventArgs e)
+        private void OnButtonPressed(object sender, ButtonPressedEventArgs e)
         {
-            if(e.NameWithoutLocale.IsEquivalentTo("Objects/Planting Calendar"))
+            if(e.Button.IsActionButton() && Game1.player.ActiveObject != null && Game1.player.ActiveObject.Name == "Planting Calendar")
             {
-                e.LoadFromModFile<PlantingCalendar>("assets/planting-calendar.png", AssetLoadPriority.Low);
+                Game1.activeClickableMenu = new CalendarMenu();
             }
         }
     }
