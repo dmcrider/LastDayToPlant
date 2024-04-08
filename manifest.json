@@ -1,25 +1,12 @@
 {
-  "Name": "LastDayToPlant",
-  "Author": "dmcrider57",
-  "Version": "2.1.0",
-  "Description": "Shows a message when today is the last day a crop can be planted this year. Supports some mods.",
-  "UniqueID": "com.dayloncrider.stardewvalley.lastdaytoplant",
-  "EntryDll": "LastDayToPlant.dll",
-  "MinimumApiVersion": "3.8.0",
-  "UpdateKeys": [ "Nexus:7917"],
-  "Languages": [
-    {
-      "Code": "en",
-      "DisplayName": "English",
-      "IsPrimary": true
-    },
-    {
-      "Code": "es",
-      "DisplayName": "Español"
-    },
-    {
-      "Code": "pt",
-      "DisplayName": "Português"
-    }
-  ]
+  "Name": "Planting Calendar",
+  "Author": "FluffyOtterFists",
+  "Version": "1.0.0-alpha",
+  "Description": "Adds a calendar to the game that shows when the last day to plant each crop is.",
+  "UniqueID": "FluffyOtterFists.PlantingCalendar",
+  "EntryDll": "PlantingCalendar.dll",
+  "UpdateKeys": [], //"Nexus:7917"
+  "ContentPackFor": {
+    "UniqueID": "Pathoschild.ContentPatcher"
+  }
 }

@@ -1,0 +1,92 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\_Projects\\StardewMods\\PlantingCalendar\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D9DD12F6-C24C-4FCB-8860-76BD4CDE7D1B}|PlantingCalendar.csproj|d:\\_projects\\stardewmods\\plantingcalendar\\modentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9DD12F6-C24C-4FCB-8860-76BD4CDE7D1B}|PlantingCalendar.csproj|solutionrelative:modentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9DD12F6-C24C-4FCB-8860-76BD4CDE7D1B}|PlantingCalendar.csproj|d:\\_projects\\stardewmods\\plantingcalendar\\content.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D9DD12F6-C24C-4FCB-8860-76BD4CDE7D1B}|PlantingCalendar.csproj|solutionrelative:content.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9DD12F6-C24C-4FCB-8860-76BD4CDE7D1B}|PlantingCalendar.csproj|d:\\_projects\\stardewmods\\plantingcalendar\\manifest.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D9DD12F6-C24C-4FCB-8860-76BD4CDE7D1B}|PlantingCalendar.csproj|solutionrelative:manifest.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9DD12F6-C24C-4FCB-8860-76BD4CDE7D1B}|PlantingCalendar.csproj|d:\\_projects\\stardewmods\\plantingcalendar\\plantingcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9DD12F6-C24C-4FCB-8860-76BD4CDE7D1B}|PlantingCalendar.csproj|solutionrelative:plantingcalendar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PlantingCalendar.cs",
+              "DocumentMoniker": "D:\\_Projects\\StardewMods\\PlantingCalendar\\PlantingCalendar.cs",
+              "RelativeDocumentMoniker": "PlantingCalendar.cs",
+              "ToolTip": "D:\\_Projects\\StardewMods\\PlantingCalendar\\PlantingCalendar.cs",
+              "RelativeToolTip": "PlantingCalendar.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-25T23:26:25.052Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "content.json",
+              "DocumentMoniker": "D:\\_Projects\\StardewMods\\PlantingCalendar\\content.json",
+              "RelativeDocumentMoniker": "content.json",
+              "ToolTip": "D:\\_Projects\\StardewMods\\PlantingCalendar\\content.json",
+              "RelativeToolTip": "content.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-02-25T23:14:50.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ModEntry.cs",
+              "DocumentMoniker": "D:\\_Projects\\StardewMods\\PlantingCalendar\\ModEntry.cs",
+              "RelativeDocumentMoniker": "ModEntry.cs",
+              "ToolTip": "D:\\_Projects\\StardewMods\\PlantingCalendar\\ModEntry.cs",
+              "RelativeToolTip": "ModEntry.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-02-25T23:09:09.269Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "manifest.json",
+              "DocumentMoniker": "D:\\_Projects\\StardewMods\\PlantingCalendar\\manifest.json",
+              "RelativeDocumentMoniker": "manifest.json",
+              "ToolTip": "D:\\_Projects\\StardewMods\\PlantingCalendar\\manifest.json",
+              "RelativeToolTip": "manifest.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-02-25T21:52:04.222Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
