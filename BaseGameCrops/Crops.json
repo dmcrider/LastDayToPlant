@@ -381,7 +381,7 @@
   },
   {
     "Name": "Powdermelon",
-    "Seasons": [ "spring" ],
+    "Seasons": [ "winter" ],
     "DaysToGrow": 7,
     "Regrowth": 0,
     "AvailableYear": 1
