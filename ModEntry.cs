@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
@@ -83,7 +84,11 @@ public class ModEntry : Mod
         using (var reader = new StreamReader(stream))
         {
             var json = reader.ReadToEnd();
-            var list = JsonSerializer.Deserialize<List<Crop>>(json);
+            var options = new JsonSerializerOptions
+            {
+                Converters = { new JsonStringEnumConverter() }
+            };
+            var list = JsonSerializer.Deserialize<List<Crop>>(json, options);
             AllCrops.AddRange(list);
         }
     }
