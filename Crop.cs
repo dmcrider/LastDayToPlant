@@ -1,14 +1,15 @@
 ﻿using StardewModdingAPI;
-using System.IO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Nodes;
+using System.Reflection;
 
 namespace LastDayToPlant;
 
 public class Crop
 {
+    public string OriginalName { get; set; } // base name for localization
     public string Name { get; set; }
     public int DaysToGrow { get; set; }
     public List<Season> Seasons { get; set; }
@@ -16,190 +17,293 @@ public class Crop
     public int AvailableYear { get; set; } = 1;
     public bool GingerIsland { get; set; } = false;
 
-    public string Message { get; set; }
-    public string MessageSpeedGro { get; set; }
-    public string MessageDelxueSpeedGro { get; set; }
-    public string MessageHyperSpeedGro { get; set; }
-
+    public string Message { get; private set; }
+    public string MessageSpeedGro { get; private set; }
+    public string MessageDelxueSpeedGro { get; private set; }
+    public string MessageHyperSpeedGro { get; private set; }
 
     public Crop(string name, int daysToGrow)
     {
+        OriginalName = name;
         Name = name;
         DaysToGrow = daysToGrow;
+        Seasons = new List<Season>();
     }
 
     public Crop() { }
 
     public bool IsLastGrowSeason(Season season)
     {
+        if (Seasons == null || Seasons.Count == 0) return false;
+
         var seasons = Seasons.OrderByDescending(x => x);
-        return seasons.First() == season;
+        return seasons.FirstOrDefault() == season;
     }
 
-    public void Localize(IModHelper helper, string baseName)
+    public void Localize(IModHelper helper)
     {
-        // This one can't be handled by I18n because it's dynamic
-        Name = helper.Translation.Get($"crop.{baseName.Replace(" ", "")}");
-        // The rest of the messages can though
+        // Attempt translation; fall back to original
+        var localized = helper.Translation.Get($"crop.{OriginalName.Replace(" ", "")}");
+        if (!string.IsNullOrEmpty(localized))
+        {
+            Name = localized;
+        }
+        else
+        {
+            Name = OriginalName;
+        }
+        PrecomputeMessages();
+    }
+
+    private void PrecomputeMessages()
+    {
         Message = I18n.Notification_Crop_NoFertilizer(Name);
         MessageSpeedGro = I18n.Notification_Crop_SpeedGro(Name);
         MessageDelxueSpeedGro = I18n.Notification_Crop_DeluxeSpeedGro(Name);
         MessageHyperSpeedGro = I18n.Notification_Crop_HyperSpeedGro(Name);
     }
 
-    public static Crop FromModFile(string cropFilePath, string modName, IMonitor logger)
+    private interface IJsonAssetsApi
     {
+        List<string> GetCropNames();
+        int[] GetCropGrowthStageDays(string name);
+        IList<string> GetCropSeasons(string name);
+    }
+
+    private static IJsonAssetsApi _jaApiCache;
+
+    public static List<Crop> LoadAllCrops(IModHelper helper, IMonitor monitor)
+    {
+        var results = new List<Crop>(256); // initial capacity for optimization
+
+        // 1. GameData/Crops via reflection (typed access would be faster; reflection keeps compatibility)
         try
         {
-            string jsonText;
-            try
+            var raw = helper.GameContent.Load<object>("GameData/Crops");
+            if (raw is IEnumerable enumerable)
             {
-                jsonText = File.ReadAllText(cropFilePath);
-            }
-            catch (Exception ex)
-            {
-                logger.Log($"Failed to read crop file {cropFilePath} for {modName}: {ex.Message}", LogLevel.Error);
-                return null;
-            }
-
-            JsonObject jsonObject;
-            try
-            {
-                var node = JsonNode.Parse(jsonText);
-                jsonObject = node?.AsObject();
-                if (jsonObject == null)
+                foreach (var entry in enumerable)
                 {
-                    logger.Log($"Failed to parse JSON in {cropFilePath} for {modName}: document is not an object", LogLevel.Warn);
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Log($"Failed to parse JSON in {cropFilePath} for {modName}: {ex.Message}", LogLevel.Warn);
-                return null;
-            }
+                    if (entry == null) continue;
+                    var displayName = GetPropRef<string>(entry, "DisplayName") ?? GetPropRef<string>(entry, "Id") ?? "?";
+                    var seasonList = GetPropRef<IList>(entry, "Seasons") ?? new List<string>();
+                    var phaseIntList = GetPropRef<IList>(entry, "PhaseDays")
+                                        ?? GetPropRef<IList>(entry, "Phases")
+                                        ?? GetPropRef<IList>(entry, "GrowthStageDays")
+                                        ?? new List<int>();
+                    var minHarvestYear = GetPropInt(entry, "MinHarvestYear") ?? 1;
+                    var canGrowIsland = GetPropBool(entry, "CanGrowInIslandLocations") ?? false;
 
-            if (!ValidJsonCropData(jsonObject))
-            {
-                logger.Log($"Failed to load crops for {modName} from file: {cropFilePath} — missing required keys", LogLevel.Warn);
-                return null;
-            }
-
-            // Name
-            var name = jsonObject["Name"]?.GetValue<string>()?.Trim();
-            if (string.IsNullOrEmpty(name))
-            {
-                logger.Log($"Crop `Name` empty or invalid in {cropFilePath}", LogLevel.Warn);
-                return null;
-            }
-
-            var crop = new Crop
-            {
-                Name = name,
-                Seasons = new List<Season>()
-            };
-
-            // Seasons
-            var seasonsNode = jsonObject["Seasons"];
-            if (seasonsNode is JsonArray seasonsArray)
-            {
-                foreach (var item in seasonsArray)
-                {
-                    var s = item?.GetValue<string>()?.Trim();
-                    if (string.IsNullOrEmpty(s))
-                        continue;
-
-                    if (Enum.TryParse<Season>(s, ignoreCase: true, out var seasonEnum))
-                        crop.Seasons.Add(seasonEnum);
-                    else
-                        logger.Log($"Unknown season '{s}' in {cropFilePath} for {modName}", LogLevel.Trace);
-                }
-            }
-            else
-            {
-                // Try string form
-                var seasonsStr = seasonsNode?.GetValue<string>();
-                if (!string.IsNullOrEmpty(seasonsStr))
-                {
-                    var parts = seasonsStr.Split(new[] { ',', ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
-                    foreach (var part in parts)
+                    var seasonsParsed = new List<Season>(4);
+                    foreach (var s in seasonList)
                     {
-                        var s = part.Trim();
-                        if (Enum.TryParse<Season>(s, ignoreCase: true, out var seasonEnum))
-                            crop.Seasons.Add(seasonEnum);
-                        else
-                            logger.Log($"Unknown season '{s}' in {cropFilePath} for {modName}", LogLevel.Trace);
+                        var str = s?.ToString();
+                        if (string.IsNullOrEmpty(str)) continue;
+
+                        if (Enum.TryParse<Season>(str, true, out var seasonEnum) && !seasonsParsed.Contains(seasonEnum))
+                        {
+                            seasonsParsed.Add(seasonEnum);
+                        }
                     }
-                }
-                else
-                {
-                    logger.Log($"Seasons node is missing or not an array/string in {cropFilePath}", LogLevel.Warn);
-                }
-            }
 
-            if (crop.Seasons.Count == 0)
-            {
-                logger.Log($"No valid seasons parsed for {name} in {cropFilePath}", LogLevel.Warn);
-                // continue — days might still be useful
-            }
+                    int totalDays = 0;
+                    foreach (var p in phaseIntList)
+                    {
+                        if (p == null) continue;
 
-            // DaysToGrow — extract first integer from SeedDescription
-            var desc = jsonObject["SeedDescription"]?.GetValue<string>() ?? string.Empty;
-            if (!string.IsNullOrEmpty(desc))
-            {
-                var m = System.Text.RegularExpressions.Regex.Match(desc, @"\b(\d+)\b");
-                if (m.Success && int.TryParse(m.Groups[1].Value, out var days))
-                {
-                    crop.DaysToGrow = days;
-                }
-                else
-                {
-                    logger.Log($"Could not parse days to grow from SeedDescription for {name} in {cropFilePath}", LogLevel.Trace);
-                    crop.DaysToGrow = 0;
-                }
-            }
-            else
-            {
-                logger.Log($"SeedDescription missing or empty for {name} in {cropFilePath}", LogLevel.Trace);
-                crop.DaysToGrow = 0;
-            }
+                        if (int.TryParse(p.ToString(), out var d))
+                        {
+                            totalDays += d;
+                        }
+                    }
 
-            logger.Log($"Loaded crop data for {modName} from file: {cropFilePath}", LogLevel.Info);
-            return crop;
+                    if (totalDays <= 0 || seasonsParsed.Count == 0) continue;
+
+                    results.Add(new Crop(displayName, totalDays)
+                    {
+                        Seasons = seasonsParsed,
+                        AvailableYear = minHarvestYear,
+                        GingerIsland = canGrowIsland
+                    });
+                }
+            }
         }
         catch (Exception ex)
         {
-            // Catch-all should not throw — log and return null to fail gracefully
-            try
+            monitor.Log($"GameData/Crops reflection load failed: {ex.Message}", LogLevel.Trace);
+        }
+
+        // 2. Legacy Data/Crops fallback for mods that still patch that asset
+        try
+        {
+            var legacy = helper.GameContent.Load<Dictionary<int, string>>("Data/Crops");
+            foreach (var kv in legacy)
             {
-                logger.Log($"Unexpected error loading crop data from {cropFilePath} for {modName}: {ex.Message}", LogLevel.Error);
+                if (string.IsNullOrWhiteSpace(kv.Value)) continue;
+
+                var parts = kv.Value.Split('/');
+                if (parts.Length < 2) continue;
+
+                var seasonsRaw = parts[0].Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                var seasonsParsed = new List<Season>(seasonsRaw.Length);
+                foreach (var s in seasonsRaw)
+                {
+                    if (Enum.TryParse<Season>(s, true, out var seasonEnum) && !seasonsParsed.Contains(seasonEnum))
+                    {
+                        seasonsParsed.Add(seasonEnum);
+                    }
+                }
+
+                var phaseDaysRaw = parts[1].Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                int totalPhaseDays = 0;
+                foreach (var p in phaseDaysRaw)
+                {
+                    if (int.TryParse(p, out var d)) totalPhaseDays += d;
+                }
+
+                if (totalPhaseDays <= 0 || seasonsParsed.Count == 0) continue;
+
+                string seedName = ResolveSeedName(helper, kv.Key) ?? $"Seed {kv.Key}";
+                if (results.Exists(r => string.Equals(r.OriginalName, seedName, StringComparison.OrdinalIgnoreCase))) continue;
+
+                results.Add(new Crop(seedName, totalPhaseDays) { Seasons = seasonsParsed });
             }
-            catch { }
+        }
+        catch (Exception ex)
+        {
+            monitor.Log($"Data/Crops load failed: {ex.Message}", LogLevel.Trace);
+        }
+
+        // 3. Json Assets merge (cache API)
+        try
+        {
+            _jaApiCache ??= helper.ModRegistry.GetApi<IJsonAssetsApi>("spacechase0.JsonAssets");
+            var ja = _jaApiCache;
+            if (ja != null)
+            {
+                foreach (var name in ja.GetCropNames())
+                {
+                    int[] phases = ja.GetCropGrowthStageDays(name) ?? Array.Empty<int>();
+                    int phaseSum = 0; foreach (var v in phases) phaseSum += v;
+                    var seasonStrings = ja.GetCropSeasons(name) ?? Array.Empty<string>();
+                    var seasonsParsed = new List<Season>(seasonStrings.Count);
+                    foreach (var s in seasonStrings)
+                    {
+                        if (Enum.TryParse<Season>(s, true, out var seasonEnum) && !seasonsParsed.Contains(seasonEnum))
+                        {
+                            seasonsParsed.Add(seasonEnum);
+                        }
+                    }
+
+                    if (phaseSum <= 0 || seasonsParsed.Count == 0) continue;
+
+                    var existing = results.Find(c => string.Equals(c.OriginalName, name, StringComparison.OrdinalIgnoreCase));
+                    if (existing != null)
+                    {
+                        existing.DaysToGrow = phaseSum;
+                        existing.Seasons = seasonsParsed;
+                    }
+                    else
+                    {
+                        results.Add(new Crop(name, phaseSum) { Seasons = seasonsParsed });
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            monitor.Log($"Json Assets merge failed: {ex.Message}", LogLevel.Warn);
+        }
+
+        // Final filter & sort
+        results.RemoveAll(c => c.DaysToGrow <= 0 || c.Seasons == null || c.Seasons.Count == 0);
+        results.Sort((a, b) => string.Compare(a.OriginalName, b.OriginalName, StringComparison.OrdinalIgnoreCase));
+        return results;
+    }
+
+    private static T GetPropRef<T>(object obj, string name) where T : class
+    {
+        if (obj == null) return null;
+
+        var type = obj.GetType();
+        var prop = type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+        if (prop == null) return null;
+
+        try
+        {
+            return prop.GetValue(obj) as T;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+    private static int? GetPropInt(object obj, string name)
+    {
+        if (obj == null) return null;
+
+        var type = obj.GetType();
+        var prop = type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+        if (prop == null) return null;
+
+        try
+        {
+            var val = prop.GetValue(obj);
+            if (val == null) return null;
+
+            if (val is int i) return i;
+
+            if (int.TryParse(val.ToString(), out var parsed)) return parsed;
+
+            return null;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+    private static bool? GetPropBool(object obj, string name)
+    {
+        if (obj == null) return null;
+
+        var type = obj.GetType();
+        var prop = type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+        if (prop == null) return null;
+
+        try
+        {
+            var val = prop.GetValue(obj);
+            if (val == null) return null;
+
+            if (val is bool b) return b;
+
+            if (bool.TryParse(val.ToString(), out var parsed)) return parsed;
+
+            return null;
+        }
+        catch
+        {
             return null;
         }
     }
 
-    private static bool ValidJsonCropData(JsonObject jsonObject)
+    private static string ResolveSeedName(IModHelper helper, int seedObjectId)
     {
-        if (jsonObject == null)
+        try
         {
-            return false;
-        }
-        var requiredKeys = new List<string> { "Name", "Seasons", "SeedDescription" };
-
-        foreach (var key in requiredKeys)
-        {
-            if (!jsonObject.ContainsKey(key))
+            var objects = helper.GameContent.Load<Dictionary<int, string>>("Data/ObjectInformation");
+            if (objects.TryGetValue(seedObjectId, out var raw))
             {
-                return false;
+                var firstSlash = raw.IndexOf('/');
+                if (firstSlash > 0)
+                {
+                    return raw[..firstSlash];
+                }
             }
         }
-
-        return true;
+        catch { }
+        return null;
     }
 
-    public override string ToString()
-    {
-        return Name;
-    }
+    public override string ToString() => Name;
 }
