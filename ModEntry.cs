@@ -18,11 +18,15 @@ public class ModEntry : Mod
         I18n.Init(helper.Translation);
         MyConfig = MyHelper.ReadConfig<ModConfig>();
 
-        ReloadCrops(localize: true); // initial localization
-
+        MyHelper.Events.GameLoop.GameLaunched += GameLoop_GameLaunched;
         MyHelper.Events.GameLoop.DayStarted += GameLoop_DayStarted;
         MyHelper.Events.Content.LocaleChanged += Content_LocaleChanged;
         MyHelper.Events.Content.AssetsInvalidated += Content_AssetsInvalidated;
+    }
+
+    private void GameLoop_GameLaunched(object sender, GameLaunchedEventArgs e)
+    {
+        ReloadCrops(localize: true); // initial localization after all mods are loaded
     }
 
     private void ReloadCrops(bool localize)
