@@ -1,4 +1,10 @@
 # Release History
+v2.3.0 - Added additional logging and error messages when trying to load crops from mods. When a crop's last day to plant is a Wednesday, the notification will show on both Tuesday (indicating that tomorrow is the last day to plant) and Wednesday (indicating that today is the last day) so that you can buy seeds from Pierre before he closes shop. Working on a fix for translations.
+
+v2.2.0 - Added support for v1.6 (thanks to Tenebrosful﻿ for the assistance).
+
+v2.1.0 - Added full support for any mod that uses crop.json files.
+
 v2.0.2 - Fixed crop names not being translated correctly.
 
 v2.0.1 - Added support for other mods.
