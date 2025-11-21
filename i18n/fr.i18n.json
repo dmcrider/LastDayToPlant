@@ -46,5 +46,9 @@
   "notification.crop.no-fertilizer": "Aujourd'hui est le dernier jour pour planter {{cropName}} cette saison sans engrais.",
   "notification.crop.speed-gro": "Aujourd'hui est le dernier jour pour planter {{cropName}} cette saison avec un engrais de croissance rapide.",
   "notification.crop.deluxe-speed-gro": "Aujourd'hui est le dernier jour pour planter {{cropName}} cette saison avec un engrais de croissance rapide II.",
-  "notification.crop.hyper-speed-gro": "Aujourd'hui est le dernier jour pour planter {{cropName}} cette saison avec un engrais Vitesse grand V."
+  "notification.crop.hyper-speed-gro": "Aujourd'hui est le dernier jour pour planter {{cropName}} cette saison avec un engrais Vitesse grand V.",
+  "notification.crop.no-fertilizer-wednesday": "Demain est le dernier jour pour planter {{cropName}} cette saison sans engrais.",
+  "notification.crop.speed-gro-wednesday": "Demain est le dernier jour pour planter {{cropName}} cette saison avec un engrais de croissance rapide.",
+  "notification.crop.deluxe-speed-gro-wednesday": "Demain est le dernier jour pour planter {{cropName}} cette saison avec un engrais de croissance rapide II.",
+  "notification.crop.hyper-speed-gro-wednesday": "Demain est le dernier jour pour planter {{cropName}} cette saison avec un engrais Vitesse grand V."
 }
