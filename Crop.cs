@@ -63,7 +63,8 @@ public class Crop
         MessageHyperSpeedGro = I18n.Notification_Crop_HyperSpeedGro(Name);
     }
 
-    private interface IJsonAssetsApi
+    // Changed to public so SMAPI can map the mod-provided API
+    public interface IJsonAssetsApi
     {
         List<string> GetCropNames();
         int[] GetCropGrowthStageDays(string name);
@@ -177,37 +178,51 @@ public class Crop
         // 3. Json Assets merge (cache API)
         try
         {
-            _jaApiCache ??= helper.ModRegistry.GetApi<IJsonAssetsApi>("spacechase0.JsonAssets");
-            var ja = _jaApiCache;
-            if (ja != null)
+            // Guard: only try to get JA API if the mod is loaded
+            if (helper.ModRegistry.IsLoaded("spacechase0.JsonAssets"))
             {
-                foreach (var name in ja.GetCropNames())
+                _jaApiCache ??= helper.ModRegistry.GetApi<IJsonAssetsApi>("spacechase0.JsonAssets");
+                var ja = _jaApiCache;
+                if (ja != null)
                 {
-                    int[] phases = ja.GetCropGrowthStageDays(name) ?? Array.Empty<int>();
-                    int phaseSum = 0; foreach (var v in phases) phaseSum += v;
-                    var seasonStrings = ja.GetCropSeasons(name) ?? Array.Empty<string>();
-                    var seasonsParsed = new List<Season>(seasonStrings.Count);
-                    foreach (var s in seasonStrings)
+                    foreach (var name in ja.GetCropNames())
                     {
-                        if (Enum.TryParse<Season>(s, true, out var seasonEnum) && !seasonsParsed.Contains(seasonEnum))
+                        int[] phases = ja.GetCropGrowthStageDays(name) ?? Array.Empty<int>();
+                        int phaseSum = 0; foreach (var v in phases) phaseSum += v;
+                        var seasonStrings = ja.GetCropSeasons(name) ?? Array.Empty<string>();
+                        var seasonsParsed = new List<Season>(seasonStrings.Count);
+                        foreach (var s in seasonStrings)
                         {
-                            seasonsParsed.Add(seasonEnum);
+                            if (Enum.TryParse<Season>(s, true, out var seasonEnum) && !seasonsParsed.Contains(seasonEnum))
+                            {
+                                seasonsParsed.Add(seasonEnum);
+                            }
+                        }
+
+                        if (phaseSum <= 0 || seasonsParsed.Count == 0) continue;
+
+                        var existing = results.Find(c => string.Equals(c.OriginalName, name, StringComparison.OrdinalIgnoreCase));
+                        if (existing != null)
+                        {
+                            existing.DaysToGrow = phaseSum;
+                            existing.Seasons = seasonsParsed;
+                        }
+                        else
+                        {
+                            results.Add(new Crop(name, phaseSum) { Seasons = seasonsParsed });
                         }
                     }
-
-                    if (phaseSum <= 0 || seasonsParsed.Count == 0) continue;
-
-                    var existing = results.Find(c => string.Equals(c.OriginalName, name, StringComparison.OrdinalIgnoreCase));
-                    if (existing != null)
-                    {
-                        existing.DaysToGrow = phaseSum;
-                        existing.Seasons = seasonsParsed;
-                    }
-                    else
-                    {
-                        results.Add(new Crop(name, phaseSum) { Seasons = seasonsParsed });
-                    }
                 }
+                else
+                {
+                    // API failed to map; log and continue without JA data
+                    monitor.Log("Json Assets API not available despite mod being loaded.", LogLevel.Trace);
+                }
+            }
+            else
+            {
+                // Mod not installed; log at trace and skip JA
+                monitor.Log("Json Assets not loaded; skipping JA crop merge.", LogLevel.Trace);
             }
         }
         catch (Exception ex)
