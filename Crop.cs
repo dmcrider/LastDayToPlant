@@ -7,6 +7,17 @@ using System.Reflection;
 
 namespace LastDayToPlant;
 
+/// <summary>
+/// API interface for Json Assets mod integration.
+/// Must be a top-level public interface so SMAPI can map the mod-provided API.
+/// </summary>
+public interface IJsonAssetsApi
+{
+    List<string> GetCropNames();
+    int[] GetCropGrowthStageDays(string name);
+    IList<string> GetCropSeasons(string name);
+}
+
 public class Crop
 {
     public string OriginalName { get; set; } // base name for localization
@@ -61,14 +72,6 @@ public class Crop
         MessageSpeedGro = I18n.Notification_Crop_SpeedGro(Name);
         MessageDelxueSpeedGro = I18n.Notification_Crop_DeluxeSpeedGro(Name);
         MessageHyperSpeedGro = I18n.Notification_Crop_HyperSpeedGro(Name);
-    }
-
-    // Changed to public so SMAPI can map the mod-provided API
-    public interface IJsonAssetsApi
-    {
-        List<string> GetCropNames();
-        int[] GetCropGrowthStageDays(string name);
-        IList<string> GetCropSeasons(string name);
     }
 
     private static IJsonAssetsApi _jaApiCache;
