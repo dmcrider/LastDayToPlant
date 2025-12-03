@@ -53,7 +53,7 @@ public class Crop
 
     public void Localize()
     {
-        // Use the game's built-in DisplayName which is already translated
+        // OriginalName contains the DisplayName from the game data, which is already translated
         Name = OriginalName;
         PrecomputeMessages();
     }
