@@ -37,7 +37,7 @@ public class ModEntry : Mod
         {
             if (localize)
             {
-                crop.Localize(MyHelper);
+                crop.Localize();
             }
             AllCrops.Add(crop);
         }
@@ -61,7 +61,7 @@ public class ModEntry : Mod
     {
         foreach (var crop in AllCrops)
         {
-            crop.Localize(MyHelper);
+            crop.Localize();
         }
     }
 
