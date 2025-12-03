@@ -26,19 +26,16 @@ public class ModEntry : Mod
 
     private void GameLoop_GameLaunched(object sender, GameLaunchedEventArgs e)
     {
-        ReloadCrops(localize: true); // initial localization after all mods are loaded
+        ReloadCrops();
     }
 
-    private void ReloadCrops(bool localize)
+    private void ReloadCrops()
     {
         AllCrops.Clear();
         var loaded = Crop.LoadAllCrops(MyHelper, Monitor);
         foreach (var crop in loaded)
         {
-            if (localize)
-            {
-                crop.Localize(MyHelper);
-            }
+            crop.Localize();
             AllCrops.Add(crop);
         }
         Monitor.Log($"Reloaded {AllCrops.Count} crops.", LogLevel.Trace);
@@ -51,7 +48,7 @@ public class ModEntry : Mod
             var name = asset.Name;
             if (name == "GameData/Crops" || name == "Data/Crops" || name == "Data/ObjectInformation")
             {
-                ReloadCrops(localize: false);
+                ReloadCrops();
                 break;
             }
         }
@@ -61,7 +58,7 @@ public class ModEntry : Mod
     {
         foreach (var crop in AllCrops)
         {
-            crop.Localize(MyHelper);
+            crop.Localize();
         }
     }
 

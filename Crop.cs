@@ -51,18 +51,10 @@ public class Crop
         return seasons.FirstOrDefault() == season;
     }
 
-    public void Localize(IModHelper helper)
+    public void Localize()
     {
-        // Attempt translation; fall back to original
-        var localized = helper.Translation.Get($"crop.{OriginalName.Replace(" ", "")}");
-        if (!string.IsNullOrEmpty(localized))
-        {
-            Name = localized;
-        }
-        else
-        {
-            Name = OriginalName;
-        }
+        // OriginalName contains the DisplayName from the game data, which is already translated
+        Name = OriginalName;
         PrecomputeMessages();
     }
 
