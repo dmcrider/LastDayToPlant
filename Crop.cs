@@ -42,7 +42,7 @@ public class Crop
     }
 
     public Crop() { }
-
+#nullable enable
     public bool IsLastGrowSeason(Season season)
     {
         if (Seasons == null || Seasons.Count == 0) return false;
@@ -51,13 +51,14 @@ public class Crop
         return seasons.FirstOrDefault() == season;
     }
 
-    public void Localize()
+    // Accept an optional resolved display name so the caller can resolve translation keys
+    public void Localize(string? resolvedName = null)
     {
-        // OriginalName contains the DisplayName from the game data, which is already translated
-        Name = OriginalName;
+        // If caller provides a resolved name (from ITranslationHelper), use it; otherwise use OriginalName
+        Name = string.IsNullOrEmpty(resolvedName) ? OriginalName : resolvedName;
         PrecomputeMessages();
     }
-
+#nullable disable
     private void PrecomputeMessages()
     {
         Message = I18n.Notification_Crop_NoFertilizer(Name);

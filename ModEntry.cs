@@ -28,14 +28,15 @@ public class ModEntry : Mod
     {
         ReloadCrops();
     }
-
+#nullable enable
     private void ReloadCrops()
     {
         AllCrops.Clear();
         var loaded = Crop.LoadAllCrops(MyHelper, Monitor);
         foreach (var crop in loaded)
         {
-            crop.Localize();
+            string? resolved = GetResolvedName(crop.OriginalName);
+            crop.Localize(resolved);
             AllCrops.Add(crop);
         }
         Monitor.Log($"Reloaded {AllCrops.Count} crops.", LogLevel.Trace);
@@ -58,9 +59,28 @@ public class ModEntry : Mod
     {
         foreach (var crop in AllCrops)
         {
-            crop.Localize();
+            string? resolved = GetResolvedName(crop.OriginalName);
+            crop.Localize(resolved);
         }
     }
+
+
+    private string? GetResolvedName(string originalName)
+    {
+        try
+        {
+            var t = MyHelper.Translation.Get(originalName);
+            if (t != null)
+            {
+                return t.ToString();
+            }
+        }
+        catch
+        {
+        }
+        return null;
+    }
+#nullable disable
 
     private void GameLoop_DayStarted(object sender, DayStartedEventArgs e)
     {
